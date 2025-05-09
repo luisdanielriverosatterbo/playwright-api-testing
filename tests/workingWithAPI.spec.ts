@@ -112,3 +112,45 @@ test('Performe API Request', async ({ page }) => {
   await page.getByText('Or click here to logout.').click()
 
  })
+
+ test('Creating An Article And Deleting With API End Point', async({page, request}) =>{
+
+    await page.getByText('New Article').click()
+    await page.getByPlaceholder('Article Title').fill('Playwright is awesome for testers')
+    await page.getByPlaceholder("What's this article about?").fill('How to master Playwright With AI')
+    await page.getByPlaceholder("Write your article (in markdown)").fill('You must follow the steps and repeat them eveyday...')
+    await page.getByRole('button', {name: "Publish Article"}).click()
+
+    const articleResponse = await page.waitForResponse('https://conduit-api.bondaracademy.com/api/articles/')
+    const articleResponseBody = await articleResponse.json()
+    const slugId  = articleResponseBody.article.slug
+    console.log(slugId)
+
+    await expect(page.locator('.article-page h1')).toContainText('Playwright is awesome for testers')
+
+    await page.getByText('Home').click()
+    await page.getByText('Global Feed').click()
+    await expect(page.locator('app-article-list h1').first()).toContainText('Playwright is awesome for testers')
+
+    const response = await request.post('https://conduit-api.bondaracademy.com/api/users/login',{
+      data: {
+        "user":{"email":"istqbcertified@gmail.com","password":"welcome1"}
+      }    
+    })
+    const responseBody = await response.json()    
+    //console.log(responseBody.user.token)
+    const accessToken = responseBody.user.token
+
+    const deleteArticleRequest= await request.delete(`https://conduit-api.bondaracademy.com/api/articles/${slugId}`, {
+      headers: {
+        'authorization': `Token ${accessToken}`
+      }
+    })
+
+    expect(deleteArticleRequest.status()).toEqual(204)
+
+    //Just to logout.
+    await page.getByText('Settings').click()
+    await page.getByText('Or click here to logout.').click()
+
+ })
