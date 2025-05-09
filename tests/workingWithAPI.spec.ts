@@ -85,22 +85,22 @@ test('Performe API Request', async ({ page }) => {
 
  test('Create And Delete An Article', async({page, request}) =>{
   
-  const response = await request.post('https://conduit-api.bondaracademy.com/api/users/login',{
+  /* const response = await request.post('https://conduit-api.bondaracademy.com/api/users/login',{
     data: {
       "user":{"email":"istqbcertified@gmail.com","password":"welcome1"}
     }    
   })
   const responseBody = await response.json()    
   //console.log(responseBody.user.token)
-  const accessToken = responseBody.user.token
+  const accessToken = responseBody.user.token */
 
   const articleResponse = await request.post('https://conduit-api.bondaracademy.com/api/articles/', {
     data: {
       "article":{"title":"This is another article title","description":"This is another article about","body":"This is another article description","tagList":[]}
     },
-    headers: {
+    /* headers: {
       'authorization': `Token ${accessToken}`
-    }
+    } */
   })
 
   expect(articleResponse.status()).toEqual(201)
@@ -143,19 +143,19 @@ test('Performe API Request', async ({ page }) => {
     await page.getByText('Global Feed').click()
     await expect(page.locator('app-article-list h1').first()).toContainText('Playwright is awesome for testers')
 
-    const response = await request.post('https://conduit-api.bondaracademy.com/api/users/login',{
+   /*  const response = await request.post('https://conduit-api.bondaracademy.com/api/users/login',{
       data: {
         "user":{"email":"istqbcertified@gmail.com","password":"welcome1"}
       }    
     })
     const responseBody = await response.json()    
     //console.log(responseBody.user.token)
-    const accessToken = responseBody.user.token
+    const accessToken = responseBody.user.token */
 
     const deleteArticleRequest= await request.delete(`https://conduit-api.bondaracademy.com/api/articles/${slugId}`, {
-      headers: {
+      /* headers: {
         'authorization': `Token ${accessToken}`
-      }
+      } */
     })
 
     expect(deleteArticleRequest.status()).toEqual(204)
