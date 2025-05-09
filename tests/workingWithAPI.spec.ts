@@ -33,17 +33,28 @@ test.beforeEach(async ({page}) =>{
   //})
 
   await page.goto('https://conduit.bondaracademy.com/')
-  await page.waitForTimeout(1000)
-  await page.getByText('Sign in').click()
-  await page.getByRole('textbox', {name: "Email"}).fill('istqbcertified@gmail.com')
-  await page.getByRole('textbox', {name: "Password"}).fill('welcome1')
-  await page.getByRole('button').click()
-  //The next instruction was necesary to make the Mock work properly. It's like an exception.  
+  //await page.waitForTimeout(1000)
+  //await page.getByText('Sign in').click()
+  //await page.getByRole('textbox', {name: "Email"}).fill('istqbcertified@gmail.com')
+  //await page.getByRole('textbox', {name: "Password"}).fill('welcome1')
+  //await page.getByRole('button').click()
 
 })
 
 test('Trying First Steps', async ({ page }) => {
- // Expect a title in the Home Web Page
+
+  await page.route('*/**/api/articles*', async route =>{
+    const response = await route.fetch()
+    const responseBody = await response.json()
+    responseBody.articles[0].title = "This is a test title"
+    responseBody.articles[0].description = "This is a test description"
+        
+    await route.fulfill({
+      body: JSON.stringify(responseBody)
+    })
+  })
+
+   // Expect a title in the Home Web Page
   await expect(page.locator('.navbar-brand')).toHaveText('conduit')
   await expect(page.locator('app-article-list h1').first()).toContainText('This is a test title')
   await expect(page.locator('app-article-list p').first()).toContainText('This is a test description')
