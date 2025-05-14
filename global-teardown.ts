@@ -9,7 +9,7 @@ async function globalTeardown(){
               Authorization: `Token ${process.env.GLOBAL_ACCESS_TOKEN}`
         }
     })
-    console.log(process.env.GLOBALSLUGID)
+    //console.log(process.env.GLOBALSLUGID)
     expect(deleteGlobalArticleRequest.status()).toEqual(204)
 }
 

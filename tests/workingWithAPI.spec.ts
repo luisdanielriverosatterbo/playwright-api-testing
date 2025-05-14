@@ -83,7 +83,7 @@ test('Performe API Request', async ({ page }) => {
 
  })
 
- test('Create And Delete An Article', async({page, request}) =>{
+ test('Creating An Article With API And Deleting An Article With UI', async({page, request}) =>{
   
   /* const response = await request.post('https://conduit-api.bondaracademy.com/api/users/login',{
     data: {
@@ -124,7 +124,7 @@ test('Performe API Request', async ({ page }) => {
 
  })
 
- test('Creating An Article And Deleting With API End Point', async({page, request}) =>{
+ test('Creating An Article With UI And Deleting With API End Point', async({page, request}) =>{
 
     await page.getByText('New Article').click()
     await page.getByPlaceholder('Article Title').fill('Playwright is awesome for testers')
@@ -135,7 +135,7 @@ test('Performe API Request', async ({ page }) => {
     const articleResponse = await page.waitForResponse('https://conduit-api.bondaracademy.com/api/articles/')
     const articleResponseBody = await articleResponse.json()
     const slugId  = articleResponseBody.article.slug
-    console.log(slugId)
+    //console.log(slugId)
 
     await expect(page.locator('.article-page h1')).toContainText('Playwright is awesome for testers')
 
@@ -152,11 +152,7 @@ test('Performe API Request', async ({ page }) => {
     //console.log(responseBody.user.token)
     const accessToken = responseBody.user.token */
 
-    const deleteArticleRequest= await request.delete(`https://conduit-api.bondaracademy.com/api/articles/${slugId}`, {
-      /* headers: {
-        'authorization': `Token ${accessToken}`
-      } */
-    })
+    const deleteArticleRequest= await request.delete(`https://conduit-api.bondaracademy.com/api/articles/${slugId}`)
 
     expect(deleteArticleRequest.status()).toEqual(204)
 
