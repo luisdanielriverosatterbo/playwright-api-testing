@@ -4,7 +4,7 @@ import fs from 'fs'
 
 const authFile = '.auth/user.json'
 
-setup('Authentication', async({page, request}) =>{
+setup('Authentication', async({request}) =>{
     /* await page.goto('https://conduit.bondaracademy.com/')
     await page.waitForTimeout(500)
     await page.getByText('Sign in').click()

@@ -61,14 +61,14 @@ export default defineConfig({
     },
     {
       name: 'regression',      
-      testMatch: 'workingWithAPI.spec.ts',
+      testIgnore: ['likesCounter.spec.ts','likesCounterGlobal.spec.ts'],      
       use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' },
       dependencies: ['setup']
     }/* ,
     {
       name: 'likesCounterGlobal',
       testMatch: 'likesCounterGlobal.spec.ts',
-      use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' }
+      use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' },      
     }, */
   ],
 

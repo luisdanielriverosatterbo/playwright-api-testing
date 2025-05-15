@@ -1,13 +1,14 @@
 import {test, expect} from '@playwright/test';
 
-test('Like counter global increase', async({page}) =>{
+test('Like counter Global increase', async({page}) =>{
     
-    await page.goto('https://conduit.bondaracademy.com/')
-    //await page.waitForTimeout(500)
+    await page.goto('https://conduit.bondaracademy.com/')     
+    await page.waitForTimeout(2000)
     await page.getByText('Global Feed').click()
-    const firstLikeButtonGlobal = page.locator('app-article-preview').first().locator('button')
-    await expect(firstLikeButtonGlobal).toContainText('0')
-    await firstLikeButtonGlobal.click()
-    await expect(firstLikeButtonGlobal).toContainText('1')
+    const firstLikeButtonLocal = page.locator('app-article-preview').first().locator('button')
+    await expect(firstLikeButtonLocal).toContainText('0')
+    await firstLikeButtonLocal.click()
+    await expect(firstLikeButtonLocal).toContainText('1')
     
 })
+
