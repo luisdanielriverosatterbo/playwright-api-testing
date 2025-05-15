@@ -76,7 +76,8 @@ export default defineConfig({
    webServer: {
      command: 'npm run start',
      url: 'https://conduit.bondaracademy.com/',
-     reuseExistingServer: !process.env.CI,
+     reuseExistingServer: true,
+     //reuseExistingServer: !process.env.CI,     
    },
 
 });
