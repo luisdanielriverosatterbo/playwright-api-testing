@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 import tags from '../test-data/tags.json'
 
+test.describe.configure({mode: 'serial'})
+
 test.beforeEach(async ({page}) =>{
 
   //Creating a Mock
